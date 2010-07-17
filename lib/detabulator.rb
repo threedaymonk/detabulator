@@ -4,19 +4,19 @@ class Detabulator
   def detabulate(s)
     lines = s.split(/\n/).map{ |line| line.unpack("U*") }
     max_line_length = lines.map{ |a| a.length }.max
-    mask = [false] * max_line_length
+    mask = [true] * max_line_length
     lines.each do |line|
-      line_mask = line.map{ |cp| cp != SPACE }
-      mask = mask.zip(line_mask).map{ |a, b| a | b }
+      line_mask = (0 ... max_line_length).map{ |i| (line[i] || SPACE) == SPACE }
+      mask = mask.zip(line_mask).map{ |a, b| a & b }
     end
-    (1 .. max_line_length).each do |i|
-      mask[i] = true unless mask[i-1]
+    (max_line_length - 1).downto(1).each do |i|
+      mask[i] = false if mask[i-1]
     end
     segment_lengths = mask.inject([1]){ |a,e|
       if e
-        a[-1] += 1
-      else
         a << 1
+      else
+        a[-1] += 1
       end
       a
     }

@@ -49,5 +49,14 @@ class DetabulatorTest < Test::Unit::TestCase
     actual   = Detabulator.new.detabulate(sample)
     assert_equal expected, actual
   end
-end
 
+  def test_should_skip_large_gaps
+    sample = sample_text <<-END
+      aa         bb
+      cc         dd
+    END
+    expected = [["aa", "bb"], ["cc", "dd"]]
+    actual   = Detabulator.new.detabulate(sample)
+    assert_equal expected, actual
+  end
+end
