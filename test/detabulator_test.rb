@@ -1,3 +1,4 @@
+# encoding: utf-8
 lib_path = File.expand_path("../../lib", __FILE__)
 $:.unshift lib_path unless $:.include?(lib_path)
 require "test/unit"
