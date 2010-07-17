@@ -10,14 +10,17 @@ class DetabulatorTest < Test::Unit::TestCase
     s.gsub(/^#{first_line_indent}/, "")
   end
 
+  def detabulate(s)
+    Detabulator.new.detabulate(s)
+  end
+
   def test_should_extract_simple_blocks
     sample = sample_text <<-END
       aa bb
       cc dd
     END
     expected = [["aa", "bb"], ["cc", "dd"]]
-    actual   = Detabulator.new.detabulate(sample)
-    assert_equal expected, actual
+    assert_equal expected, detabulate(sample)
   end
 
   def test_should_extract_blocks_of_different_lengths
@@ -26,8 +29,7 @@ class DetabulatorTest < Test::Unit::TestCase
       ddd  ee   ffff
     END
     expected = [["a", "bbb", "c"], ["ddd", "ee", "ffff"]]
-    actual   = Detabulator.new.detabulate(sample)
-    assert_equal expected, actual
+    assert_equal expected, detabulate(sample)
   end
 
   def test_should_recognise_empty_columns
@@ -36,8 +38,7 @@ class DetabulatorTest < Test::Unit::TestCase
       ddd       eeee
     END
     expected = [["a", "bbb", "c"], ["ddd", "", "eeee"]]
-    actual   = Detabulator.new.detabulate(sample)
-    assert_equal expected, actual
+    assert_equal expected, detabulate(sample)
   end
 
   def test_should_handle_trailing_empty_columns
@@ -46,8 +47,7 @@ class DetabulatorTest < Test::Unit::TestCase
       cc
     END
     expected = [["aa", "bb"], ["cc", ""]]
-    actual   = Detabulator.new.detabulate(sample)
-    assert_equal expected, actual
+    assert_equal expected, detabulate(sample)
   end
 
   def test_should_skip_large_gaps
@@ -56,8 +56,7 @@ class DetabulatorTest < Test::Unit::TestCase
       cc         dd
     END
     expected = [["aa", "bb"], ["cc", "dd"]]
-    actual   = Detabulator.new.detabulate(sample)
-    assert_equal expected, actual
+    assert_equal expected, detabulate(sample)
   end
 
   def test_should_treat_a_codepoint_as_a_single_entity
@@ -66,7 +65,6 @@ class DetabulatorTest < Test::Unit::TestCase
       aaa bbb
     END
     expected = [["£££", "€€€"], ["aaa", "bbb"]]
-    actual   = Detabulator.new.detabulate(sample)
-    assert_equal expected, actual
+    assert_equal expected, detabulate(sample)
   end
 end
