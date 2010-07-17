@@ -59,4 +59,14 @@ class DetabulatorTest < Test::Unit::TestCase
     actual   = Detabulator.new.detabulate(sample)
     assert_equal expected, actual
   end
+
+  def test_should_treat_a_codepoint_as_a_single_entity
+    sample = sample_text <<-END
+      £££ €€€
+      aaa bbb
+    END
+    expected = [["£££", "€€€"], ["aaa", "bbb"]]
+    actual   = Detabulator.new.detabulate(sample)
+    assert_equal expected, actual
+  end
 end
