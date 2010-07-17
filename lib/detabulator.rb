@@ -24,7 +24,7 @@ class Detabulator
     lines.map{ |line|
       offset = 0
       segment_lengths.map{ |length|
-        word = line[offset, length].pack('U*').strip
+        word = (line[offset, length] || []).pack('U*').strip
         offset += length
         word
       }

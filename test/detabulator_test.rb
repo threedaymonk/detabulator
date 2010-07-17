@@ -40,5 +40,14 @@ class DetabulatorTest < Test::Unit::TestCase
     assert_equal expected, actual
   end
 
+  def test_should_handle_trailing_empty_columns
+    sample = sample_text <<-END
+      aa bb
+      cc
+    END
+    expected = [["aa", "bb"], ["cc", ""]]
+    actual   = Detabulator.new.detabulate(sample)
+    assert_equal expected, actual
+  end
 end
 
