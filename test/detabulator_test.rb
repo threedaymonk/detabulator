@@ -20,5 +20,15 @@ class DetabulatorTest < Test::Unit::TestCase
     assert_equal expected, actual
   end
 
+  def test_should_extract_blocks_of_different_lengths
+    sample = sample_text <<-END
+      a   bbb c
+      ddd ee  ffff
+    END
+    expected = [["a", "bbb", "c"], ["ddd", "ee", "ffff"]]
+    actual   = Detabulator.new.detabulate(sample)
+    assert_equal expected, actual
+  end
+
 end
 
