@@ -1,7 +1,7 @@
 Detabulator
 ===========
 
-Extract columnar data from tabulated plain text.
+Extract columnar data from tabulated fixed-width text.
 
 Example
 -------
