@@ -26,3 +26,10 @@ Will produce this:
      ["Not drinks", "Toothpaste", "Mouthwash"]] 
 
 This is just a first release that does something useful.
+
+Limitations
+-----------
+
+* Double-width characters (e.g. Japanese) are not handled correctly.
+* Combining diacritics are not handled correctly.
+* When one cell contains much longer text and a space, an extra column is generated.
